@@ -1,0 +1,76 @@
+﻿@model IEnumerable<WebBanHangMeatDeli.Models.ShoppingCartItem>
+@using WebBanHangMeatDeli.Commons
+<div class="row">
+    <div class="col-xs-12">
+        <div class="cart_list table-responsive">
+            <table class="table_cart table-bordered">
+                <thead style="font-family: Roboto Condensed">
+                    <tr>
+                        <th class="id">STT</th>
+                        <th class="product">Hình ảnh</th>
+                        <th class="description">Tên sản phẩm</th>
+                        <th class="quantity" width="140">Số lượng</th>
+                        <th class="price" width="140">Giá</th>
+                        <th class="value" width="140">Tổng</th>
+                        <th class="action" width="140">Xóa</th>
+                    </tr>
+                </thead>
+
+                @{decimal totalPrice = 0;
+                }
+                @if (Model != null && Model.Any())
+                {
+                    var i = 1;
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            totalPrice += item.ProductPriceTotal;
+                            <tr id="row_@item.ProductId">
+                                <td class="id">@i</td>
+                                <td class="product_img"><a href="san-pham/@item.Alias-p-@item.ProductId"><img width="60" alt="cart" src="~/Upload/Product/@item.ProductImage"></a></td>
+                                <td class="">
+                                    <h6><a href="san-pham/@item.Alias-p-@item.ProductId">@item.ProductName</a></h6>
+                                </td>
+                                <td class="p_quantity">
+                                    <div class="pp_quantity">
+                                        <input type="number" data-id="@item.ProductId" required name="number" step="1" min="1" class="form-control quantityItems" value="@item.ProductQuantity" />
+                                    </div>
+                                </td>
+                                <td class="u_price">@Common.FormatNumber(@item.ProductPrice)<sup>đ</sup></td>
+                                <td class="p_value">@Common.FormatNumber(@item.ProductPriceTotal)<sup>đ</sup></td>
+                                <td class="p_action">
+                                    <button data-id="@item.ProductId" class="btn btn-danger btnDelete"><i class="fa fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            i++;
+                        }
+                    </tbody>
+                }
+            </table>
+        </div>
+    </div>
+    <div class="col-xs-13">
+        <div class="col-lg-5 col-md-4 col-sm-12">
+            <a href="/san-pham" class="continue-shopping">Tiếp tục mua hàng</a>
+        </div>
+        @if (Model != null && Model.Any())
+        {
+            if (HttpContext.Current.Session["auth"] != null)
+            {
+                    <div class="col-lg-7 col-md-6 col-sm-12">
+                        <div class="total text-right">
+                            <h2>Tạm tính<span>@Common.FormatNumber(totalPrice, 2)</span><sup>đ</sup></h2>
+                            <h2><span>Đã bao gồm phí VAT (nếu có)</span></h2>
+                            <a class="continue-shopping" href="/cart/Checkout">Tiến hành thanh toán</a>
+                        </div>
+                    </div>
+            }
+            else
+            {
+                <div class="col-lg-5 col-md-4 col-sm-12">
+                    <a href="/account/login" class="continue-shopping">ĐĂNG NHẬP ĐỂ THANH TOÁN</a>
+                </div>
+            }
+        }
+    </div>
+</div>

@@ -1,0 +1,12 @@
+﻿@model IEnumerable<WebBanHangMeatDeli.Models.tb_Menu>
+@if (Model != null && Model.Any())
+{
+    foreach (var item in Model)
+    {
+        if (item.Alias.Equals("trang-chu"))
+        {
+            item.Alias = "";
+        }
+        <a class="u-active-none u-border-none u-btn u-button-link u-button-style u-custom-font u-font-roboto-condensed u-hover-none u-none u-text-hover-custom-color-1 u-text-white u-btn-2" href="/@item.Alias">@item.Title</a>
+    }
+}

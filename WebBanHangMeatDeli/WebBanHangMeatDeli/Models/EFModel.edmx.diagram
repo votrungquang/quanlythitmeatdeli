@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="471f7a228b424d0f86dd7e2ab4e750c7" Name="Diagram1" ZoomLevel="91">
+        <EntityTypeShape EntityType="MeatDeliSaiGonModel.tb_Contact" Width="1.5" PointX="3" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeatDeliSaiGonModel.tb_Menu" Width="1.5" PointX="0.75" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeatDeliSaiGonModel.tb_News" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeatDeliSaiGonModel.tb_OrderDetails" Width="1.5" PointX="7.5" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeatDeliSaiGonModel.tb_Orders" Width="1.5" PointX="5.25" PointY="19.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeatDeliSaiGonModel.tb_Product" Width="1.5" PointX="5.25" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeatDeliSaiGonModel.tb_ProductCatagory" Width="1.5" PointX="3" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeatDeliSaiGonModel.tb_Users" Width="1.5" PointX="3" PointY="19.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeatDeliSaiGonModel.tb_UsersType" Width="1.5" PointX="0.75" PointY="20.25" IsExpanded="true" />
+        <AssociationConnector Association="MeatDeliSaiGonModel.FK__Menu__Contact" ManuallyRouted="false" />
+        <AssociationConnector Association="MeatDeliSaiGonModel.FK__Menu__News" ManuallyRouted="false" />
+        <AssociationConnector Association="MeatDeliSaiGonModel.FK__Menu__ProductsCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="MeatDeliSaiGonModel.FK__Orders__OdersDetails" ManuallyRouted="false" />
+        <AssociationConnector Association="MeatDeliSaiGonModel.FK__Products__OdersDetails" ManuallyRouted="false" />
+        <AssociationConnector Association="MeatDeliSaiGonModel.FK__User__Oders" ManuallyRouted="false" />
+        <AssociationConnector Association="MeatDeliSaiGonModel.FK__ProductsCategory__Product" ManuallyRouted="false" />
+        <AssociationConnector Association="MeatDeliSaiGonModel.FK__UserType__User" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,51 @@
+﻿@model IPagedList<WebBanHangMeatDeli.Models.tb_News>
+@using PagedList.Mvc;
+@using PagedList;
+@{
+    ViewBag.Title = "Tin tức";
+}
+<link rel="stylesheet" type="text/css" href="~/Content/cart.css?Version=1" />
+<link rel="stylesheet" type="text/css" href="~/Content/cartResponesive.css?Version=1" />
+<div class="blog-fullview-area"style="margin-bottom:5rem">
+    <div class="container">
+
+        <div class="row">
+            <div style="margin-bottom:3rem">
+                <a class="u-custom-font u-text-custom-color-1 u-font-roboto-condensed" href="/" style="text-decoration:none;float:left;font-size:13px;margin:15px 0;">Trang chủ<span>&emsp;/&emsp;</span></a>
+                <p class="u-custom-font  u-font-roboto-condensed" style="text-decoration:none;float:left;font-size:13px;margin:15px 0;">Tin tức</p>
+            </div>
+        </div>
+        <div class="row">
+            @if (Model != null && Model.Any())
+            {
+                foreach (var item in Model)
+                {
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <div class="single-latest-blog">
+                            <div class="single-latest-blog-img">
+                                <a href="#">
+                                    <img src="~/Upload/News/@item.Image" alt="@item.Title">
+                                </a>
+                            </div>
+                            <div class="single-latest-blog-text">
+                                <div class="date-comment clearfix">
+                                    <h4>MeatDeli</h4>
+                                    <h5>@item.CreatedDate</h5>
+                                </div>
+                                <div class="blog-content">
+                                    <h4><a href="blog-details.html">@item.Title</a></h4>
+                                    <p>@item.Description ...</p>
+                                </div>
+                                <div class="continue-reading">
+                                    <a href="#">Đọc tiếp</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+        
+    </div>
+</div>

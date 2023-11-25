@@ -1,0 +1,170 @@
+﻿@model IPagedList<WebBanHangMeatDeli.Models.tb_Product>
+@using PagedList.Mvc;
+@using PagedList;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("_PartialModalDelete")
+<!--Modal Create-->
+@if (TempData["message"] != null)
+{
+    @section scripts {
+        <script type="text/javascript">
+                $(document).ready(function () {
+                    toastr.success("@TempData["message"]","Thông báo")
+                })
+        </script>
+    }
+}
+@if (TempData["warning"] != null)
+{
+    @section scripts {
+        <script type="text/javascript">
+                $(document).ready(function () {
+                    toastr.error("@TempData["warning"]","Thông báo")
+                })
+        </script>
+    }
+}
+@section script{
+    <script>
+        $(document).ready(function () {
+            $('body').on('click', '.btnDeleteProducts', function () {
+                var id = $(this).data("id");
+                $('body').on('click', '.btnConfirm', function () {
+                    $.ajax({
+                        url: `/Admin/Products/Delete`,
+                        type: 'POST',
+                        data: { id: id },
+                        success: function (rs) {
+                            if (rs.success) {
+                                $('#row_' + id).remove();
+                                toastr.success("Xóa thành công!", "Thông báo");
+                            };
+
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>THÔNG TIN SẢN PHẨM</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">Trang chủ</li>
+                    <li class="breadcrumb-item active">Quản lý</li>
+                    <li class="breadcrumb-item active">Sản phẩm</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <!-- Modal Delete-->
+    <!-- Default box -->
+    <div class="card">
+        <div class=" card-header d-inline-flex justify-content-between">
+            @using (Html.BeginForm("Index", "Products", FormMethod.Get, new { @class = "form-group form-inline col-11" }))
+            {
+                <div class="form-group form-inline col-11">
+                    @Html.TextBox("SeachString", "", new { @class = "form-control col-4" })
+                    <input type="submit" class="btn btn-primary ml-2" value="Tìm kiếm" />
+                </div>
+            }
+            <div class="col-1">
+                <a class="btn bg-primary bg-gradient" href="/Admin/Products/Create"><i class=" fas fa-plus-square fa-sm"></i></a>
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table text-center">
+                <tr>
+                    <th class="col-md-1">
+                        STT
+                    </th>
+                    <th class="col-md-1">
+                        Danh mục
+                    </th>
+                    <th class="col-md-4">
+                        Tên sản phẩm
+                    </th>
+                    <th class="col-1">
+                        Hình ảnh
+                    </th>
+                    <th class="col-md-1">
+                        Giá
+                    </th>
+                    <th class="col-md-1">
+                        Số lượng
+                    </th>
+                    <th class="col-md-1">
+                        Giảm giá
+                    </th>
+                    <th class="col-md-1">
+                        Trạng thái
+                    </th>
+                    <th class="col-md-1"></th>
+                </tr>
+                @if (Model != null && Model.Any())
+                {
+                    var i = (ViewBag.Page * ViewBag.PageSize - ViewBag.PageSize) + 1;
+                    foreach (var item in Model)
+                    {
+                        var checkActive = item.IsActive ? "<i class='fa fa-check text-success'></i>" : "<i class='fas fa-times text-danger'></i>";
+                        var checkSale = item.IsSale ? "<i class='fa fa-check text-success'></i>" : "<i class='fas fa-times text-danger'></i>";
+                        @Html.HiddenFor(modelItem => item.Image1)
+                        @Html.HiddenFor(modelItem => item.Image2)
+                        <tr id="row_@item.Id">
+                            <td>
+                                @i
+                            </td>
+                            <td>
+                                @item.tb_ProductCatagory.Name
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                <center><img style="width:60px;height:60px" src="~/Upload/Product/@item.Image" /></center>
+                            </td>
+                            <td>
+                                @WebBanHangMeatDeli.Commons.Common.FormatNumber(item.Price, 0)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Quantity)
+                            </td>
+                            <td class="text-center">
+                                @Html.Raw(checkSale)
+                            </td>
+                            <td class="text-center">
+                                @Html.Raw(checkActive)
+                            </td>
+                            <td>
+                                <div class="d-flex justify-content-center">
+                                    <a class="btn btn-sm btn-primary" href="/Admin/Products/Edit/@item.Id "><i class="fas fa-edit fa-xs"></i></a>
+                                    <button class="ml-1 btn-sm btn btn-danger btnDeleteProducts" data-id="@item.Id" data-toggle="modal" data-target="#DeleteModal"><i class="fas fa-trash-alt fa-xs"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                }
+                else
+                {
+                    <caption>Không có bản ghi nào!</caption>
+                }
+            </table>
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+        </div>
+    </div>
+</section>

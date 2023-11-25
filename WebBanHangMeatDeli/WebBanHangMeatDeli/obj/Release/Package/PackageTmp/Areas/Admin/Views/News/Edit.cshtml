@@ -1,0 +1,112 @@
+﻿@model WebBanHangMeatDeli.Models.tb_News
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+    <script>
+        ClassicEditor
+            .create(document.querySelector("#txtDetails"), {})
+            .then(editor => {
+                window.editor = editor;
+            })
+            .catch(err => {
+                console.error(err.stack);
+            })
+    </script>
+}
+<section class="content">
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title text-lg font-weight-bold">CHỈNH SỬA TIN TỨC</h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    @using (Html.BeginForm("Edit", "News", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+                        @Html.HiddenFor(x => x.Id)
+                        @Html.HiddenFor(x => x.Image)
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="tab-content">
+                                    <div class="active tab-pane" id="activity">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Tên tin tức</label>
+                                            @Html.EditorFor(x => x.Title, new { htmlAttributes = new { @class = "form-control", @placeholder = "Tên tin tức" } })
+                                            @Html.ValidationMessageFor(x => x.Title, null, new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Danh mục</label>
+                                            @Html.DropDownListFor(x => x.Menu_Id, ViewBag.ProductCategory as SelectList, "-Chọn danh mục-", new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(x => x.Menu_Id, null, new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Mô tả</label>
+                                            @Html.TextAreaFor(x => x.Description, new { @class = "form-control", @placeholder = "Mô tả" })
+                                            @Html.ValidationMessageFor(x => x.Description, null, new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Chi tiết</label>
+                                            @Html.TextAreaFor(model => model.Details, new { @class = "form-control", @id = "txtDetails" })
+                                            @Html.ValidationMessageFor(model => model.Details, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-6">Hình ảnh</label>
+                                            <div>
+                                                <img class="col-md-10" style="width:80px;height:80px;margin-bottom:10px" src="~/Upload/News/@Model.Image" />
+                                                <input type="file" class="form-control-file col-md-10" id="upLoadFile" name="upLoadFile">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Người tạo</label>
+                                                    @Html.TextBoxFor(x => x.CreatedBy, new { @class = "form-control", @placeholder = "Người tạo" })
+                                                    @Html.ValidationMessageFor(x => x.CreatedBy, null, new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Ngày tạo</label>
+                                                    @Html.TextBoxFor(x => x.CreatedDate, new { @class = "form-control", @placeholder = "Ngày tạo", @readonly = "readonly" })
+                                                    @Html.ValidationMessageFor(x => x.CreatedDate, null, new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Người chỉnh sửa</label>
+                                                    @Html.TextBoxFor(x => x.ModifiedBy, new { @class = "form-control", @placeholder = "Người chỉnh sửa" })
+                                                    @Html.ValidationMessageFor(x => x.ModifiedBy, null, new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Ngày chỉnh sửa</label>
+                                                    @Html.TextBoxFor(x => x.ModifiedDate, new { @class = "form-control", @placeholder = "Ngày chỉnh sửa", @readonly = "readonly" })
+                                                    @Html.ValidationMessageFor(x => x.ModifiedDate, null, new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group ml-3">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Lưu" class="btn btn-primary mr-1" />
+                                    <a class="btn btn-danger" href="/Admin/News/Index">Trở lại</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

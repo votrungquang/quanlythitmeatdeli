@@ -1,0 +1,104 @@
+﻿@model IEnumerable<WebBanHangMeatDeli.Models.ShoppingCartItem>
+@using WebBanHangMeatDeli.Commons
+@{
+    ViewBag.Title = "Checkout";
+}
+
+<div class="container product_section_container" style="margin-bottom: 3rem">
+    <div class="row">
+        <div class="col product_section clearfix">
+            <div style="margin-bottom:1rem">
+                <a class="u-custom-font u-text-custom-color-1 u-font-roboto-condensed" href="/" style="text-decoration:none;float:left;font-size:13px;margin:15px 0;">Trang chủ<span>&emsp;/&emsp;</span></a>
+                <a class="u-custom-font u-text-custom-color-1 u-font-roboto-condensed" href="/cart" style="text-decoration:none;float:left;font-size:13px;margin:15px 0;">Giỏ hàng<span>&emsp;/&emsp;</span></a>
+                <p class="u-custom-font  u-font-roboto-condensed" style="text-decoration:none;float:left;font-size:13px;margin:15px 0;">Thanh toán</p>
+            </div>
+            <div class="row">
+                <div style="border-bottom:2px solid black" class="col-md-12 text-center">
+                    <h1 class="">THANH TOÁN</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div id="show_success"></div>
+                <div class="col-md-7" style="font-family: Roboto condensed">
+                    @using (Html.BeginForm("Payment", "Cart", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <h3>THÔNG TIN KHÁCH HÀNG</h3>
+                        <div class="form-group">
+                            <label>Họ tên khách hàng</label>
+                            <input name="Name" required class="form-control" autocomplete="off" />
+                        </div>
+                        <div class="form-group">
+                            <label>Số điện thoại</label>
+                            <input name="Phone" class="form-control" required maxlength="10" autocomplete="off" />
+                        </div>
+                        <div class="form-group">
+                            <label>Địa chỉ</label>
+                            <input name="Address" class="form-control" required autocomplete="off" />
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input name="Email" class="form-control" required autocomplete="off" />
+                        </div>
+                        <div class="form-group">
+                            <label>Hình thức thanh toán</label>
+                            <select class="form-control" name="TypePayment">
+                                <option value="1" selected>COD</option>
+                                <option value="2">Chuyển khoản</option>
+
+
+                            </select>
+                        </div>
+                        <div class="form-group" style="display: inline-block; padding: 5px 10px; border: 1px solid; border-radius: 5px; background-color: #e21d2a; color: white">
+                            <a style="color: white" href=""> Thanh toán bằng paypal</a>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-block" style="padding: 0.5rem; font-size: 20px; background-color: #e21d2a;color:white">Đặt hàng</button>
+                        </div>
+                    }
+                </div>
+                <div class="col-md-5 ml-2" style="font-family: Roboto condensed">
+                    @if (Model != null && Model.Any())
+                    {
+                        <h3>GIỎ HÀNG<span style="float:right;"><small style="color:red">@Model.Count()</small></span></h3>
+                        decimal tongtien = 0;
+                        decimal vanchuyen = 30000;
+                        <div style="border:1px solid #808080;">
+                            <table class="table">
+                                <thead class="text-center" style="background-color:black;color:white">
+                                    <tr>
+                                        <td class="text-left">Tên sản phẩm</td>
+                                        <td>Số lượng</td>
+                                        <td>Tổng Giá</td>
+                                    </tr>
+                                </thead>
+                                @foreach (var item in Model)
+                                {
+                                    tongtien += item.ProductPriceTotal;
+                                    <tbody class="text-center">
+                                        <tr>
+                                            <td class="text-left">@item.ProductName</td>
+                                            <td>@item.ProductQuantity</td>
+                                            <td>@Common.FormatNumber(item.ProductPriceTotal, 0)<sup>đ</sup></td>
+                                        </tr>
+                                    </tbody>
+                                }
+                                <tr class="text-center" style="color:red">
+                                    <td class="text-left">Phí vận chuyển</td>
+                                    <td></td>
+                                    <td>@Common.FormatNumber(vanchuyen, 0)<sup>đ</sup></td>
+                                </tr>
+                                <tr class="text-center" style="color:red">
+                                    <td class="text-left">Tổng tiền</td>
+                                    <td></td>
+                                    <td>@Common.FormatNumber((tongtien + vanchuyen), 0)<sup>đ</sup></td>
+                                </tr>
+                            </table>
+                        </div>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,5 @@
+Tài khoản đăng nhập trang admin
+tên tài khoản: admin
+mật khẩu: 123456
+đường link url đăng nhập cho trang admin: https://localhost:44323/admin/home
+

@@ -1,0 +1,132 @@
+﻿@model IEnumerable<WebBanHangMeatDeli.Models.tb_Orders>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@Html.Partial("_PartialModalDelete")
+@if (TempData["message"] != null)
+{
+    @section scripts {
+        <script type="text/javascript">
+                $(document).ready(function () {
+                    toastr.success("@TempData["message"]","Thông báo")
+                })
+        </script>
+    }
+}
+@if (TempData["warning"] != null)
+{
+    @section scripts {
+        <script type="text/javascript">
+                $(document).ready(function () {
+                    toastr.error("@TempData["warning"]","Thông báo")
+                })
+        </script>
+    }
+}
+@section script{
+    <script>
+        $(document).ready(function () {
+            $('body').on('click', '.btnDeleteOrder', function () {
+                var id = $(this).data("id");
+                $('body').on('click', '.btnConfirm', function () {
+                    $.ajax({
+                        url: `/Admin/Orders/Delete`,
+                        type: 'POST',
+                        data: { id: id },
+                        success: function (rs) {
+                            if (rs.success) {
+                                $('#row_' + id).remove();
+                                toastr.success("Xóa thành công!", "Thông báo");
+                            };
+
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>THÔNG TIN ĐƠN HÀNG</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">Trang chủ</li>
+                    <li class="breadcrumb-item active">đơn hàng</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-bordered">
+                <tr class="text-left">
+                    <th class="col-1">
+                        Đơn hàng
+                    </th>
+                    <th class="col-2">
+                        Tên khách hàng
+                    </th>
+                    <th class="col-2">
+                        Email
+                    </th>
+                    <th class="col-1">
+                        SDT
+                    </th>
+                    <th class="col-3">
+                        Địa chỉ
+                    </th>
+                    <th class="col-1">
+                        Trị giá
+                    </th>
+                    <th class="col-1"></th>
+                </tr>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr id="row_@item.Id">
+                            <td>
+                                @item.Code
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NameOrder)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Phone)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Address)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TotalAmount)
+                            </td>
+                            <td>
+                                <div class="d-flex justify-content-center">
+                                    <a class="btn btn-sm btn-primary" href="/Admin/Orders/Details/@item.Id "><i class="fas fa-edit fa-xs"></i></a>
+                                    <button class="ml-1 btn-sm btn btn-danger btnDeleteOrder" data-id="@item.Id" data-toggle="modal" data-target="#DeleteModal"><i class="fas fa-trash-alt fa-xs"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <caption>Không có bản ghi nào!</caption>
+                }
+            </table>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,148 @@
+﻿@model WebBanHangMeatDeli.Models.tb_Product
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (Model != null)
+{
+    var checkQuantity = "Còn hàng";
+    <style>
+        .Css {
+            text-decoration: none;
+            float: left;
+            font-size: 13px;
+            margin: 15px 0;
+        }
+    </style>
+    <section class="single-product">
+        <div class="container">
+            <div style="margin-bottom:60px">
+                <a class="Css u-custom-font u-text-custom-color-1 u-font-roboto-condensed" href="/">Trang chủ<span>&emsp;/&emsp;</span></a>
+                <a class="Css u-custom-font u-text-custom-color-1 u-font-roboto-condensed" href="/san-pham">Sản phẩm<span>&emsp;/&emsp;</span></a>
+                <a class="Css u-custom-font u-text-custom-color-1 u-font-roboto-condensed" href="/san-pham/@Model.tb_ProductCatagory.Name">@Model.tb_ProductCatagory.Name<span>&emsp;/&emsp;</span></a>
+                <p class="Css u-custom-font u-font-roboto-condensed u-text-variant">@Model.Name</p>
+            </div>
+            <div class="row mt-20">
+                <div class="col-md-5">
+                    <div class="single-product-slider">
+                        <div id="carousel-custom"
+                             class="carousel slide"
+                             data-ride="carousel">
+                            <div class="carousel-outer">
+                                <!-- me art lab slider -->
+                                <div class="carousel-inner">
+                                    <div class="item active">
+                                        <img src="~/Upload/Product/@Model.Image"
+                                             alt="@Model.Image"
+                                             data-zoom-image="~/Upload/Product/@Model.Image" />
+                                    </div>
+                                    @if (Model.Image1 != null)
+                                    {
+                                        <div class="item">
+                                            <img src="~/Upload/Product/@Model.Image1"
+                                                 alt="@Model.Image1"
+                                                 data-zoom-image="~/Upload/Product/@Model.Image1" />
+                                        </div>
+                                    }
+                                    @if (Model.Image2 != null)
+                                    {
+                                        <div class="item">
+                                            <img src="~/Upload/Product/@Model.Image2"
+                                                 alt="@Model.Image2"
+                                                 data-zoom-image="~/Upload/Product/@Model.Image2" />
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                            <!-- thumb -->
+                            <ol class="carousel-indicators mCustomScrollbar meartlab">
+
+                                <li data-target="#carousel-custom"
+                                    data-slide-to="0"
+                                    class="active">
+                                    <img src="~/Upload/Product/@Model.Image"
+                                         alt="@Model.Image" />
+                                </li>
+                                @if (Model.Image1 != null)
+                                {
+                                    <li data-target="#carousel-custom" data-slide-to="1">
+                                        <img src="~/Upload/Product/@Model.Image1"
+                                             alt="@Model.Image1" />
+                                    </li>
+                                }
+                                @if (Model.Image2 != null)
+                                {
+                                    <li data-target="#carousel-custom" data-slide-to="2">
+                                        <img src="~/Upload/Product/@Model.Image2"
+                                             alt="@Model.Image2" />
+                                    </li>
+                                }
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    <div class="single-product-details ">
+                        <h3 class="u-custom-font  u-font-roboto-condensed">@Model.Name</h3>
+                        @if (Model.Quantity <= 0)
+                        {
+                            checkQuantity = "Hết hàng";
+                        }
+                        <p class=" u-custom-font u-font-roboto-condensed u-text-variant">
+                            Thương hiệu: <strong style="color:red">MeatDeli </strong>&ensp;|&ensp;Tình trạng: <strong style="color:red">@checkQuantity</strong>
+                        </p>
+                        @if (Model.PriceSale > 0)
+                        {
+                            <div class="u-price-wrapper u-spacing-10">
+                                <div class="u-price u-text-custom-color-1" style="font-size: 1rem; font-weight: 700;">@WebBanHangMeatDeli.Commons.Common.FormatNumber(Model.PriceSale, 0)<sup>đ</sup></div>
+                                <div class="u-price" style="font-size: 0.75rem; text-decoration-line:line-through; font-weight: 700;">@WebBanHangMeatDeli.Commons.Common.FormatNumber(Model.Price, 0)<sup>đ</sup></div>
+
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="u-price u-text-custom-color-1" style="font-size: 1rem; font-weight: 700;">@WebBanHangMeatDeli.Commons.Common.FormatNumber(Model.Price, 0)<sup>đ</sup></div>
+                        }
+
+                        <div class="product-quantity">
+                            <span class="u-custom-font u-font-roboto-condensed" style="font-size:15px">Số lượng:</span>
+                            <div class="product-quantity-slider">
+                                <input id="productQuantity"
+                                       type="text"
+                                       value="1"
+                                       name="product-quantity" />
+                            </div>
+                        </div>
+                        <a href="#" data-id="@Model.Id" class="btnAddCart u-custom-color-1 u-btn u-btn-5 u-button-style">THÊM VÀO GIỎ HÀNG</a>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin:4rem 0;">
+                <div class="col-xs-12">
+                    <div>
+                        <h3 class="u-text-custom-color-1 u-custom-font u-font-roboto-condensed">Chi tiết sản phẩm</h3>
+                        <div class="tab-content patternbg">
+                            <div>
+                                @if (Model.Description == null && Model.Details == null)
+                                {
+                                    <p class="u-custom-font u-font-roboto-condensed u-text-variant" style="font-size:1rem">
+                                        Thông tin sản phẩm đang được cập nhật...
+                                    </p>
+                                }
+                                <p class="u-custom-font u-font-roboto-condensed u-text-variant" style="font-size:1rem">
+                                    @Model.Description
+                                </p>
+                                <p class="u-custom-font u-font-roboto-condensed u-text-variant" style="font-size:1rem">
+                                    @Model.Details
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}

@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Cart";
+    @*Layout = "~/Views/Shared/_Layout.cshtml";*@
+}
+<link rel="stylesheet" type="text/css" href="~/Content/cart.css?Version=1" />
+<link rel="stylesheet" type="text/css" href="~/Content/cartResponesive.css?Version=1" />
+<div class="cart-area">
+    <div class="container">
+        <div style="margin-bottom:3rem">
+            <a class="u-custom-font u-text-custom-color-1 u-font-roboto-condensed" href="/" style="text-decoration:none;float:left;font-size:13px;margin:15px 0;">Trang chủ<span>&emsp;/&emsp;</span></a>
+            <p class="u-custom-font  u-font-roboto-condensed" style="text-decoration:none;float:left;font-size:13px;margin:15px 0;">Cart</p>
+        </div>
+        <div id="load-cart">
+            @Html.Action("LoadCart", "Cart")
+        </div>
+    </div>
+</div>
+

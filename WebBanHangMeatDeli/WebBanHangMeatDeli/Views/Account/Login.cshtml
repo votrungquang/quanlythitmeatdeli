@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+}
+<section class="signin-page account">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="block text-center">
+                    <h2 class="text-center">ĐĂNG NHẬP TÀI KHOẢN</h2>
+                    
+                        <form class="text-left clearfix" method="post">
+                            <div class="form-group">
+                                <input style="font-size:14px;font-weight:bold" type="email" name="email" required class="form-control" placeholder="Email">
+                            </div>
+                            <div class="form-group">
+                                <input style="font-size:14px;font-weight:bold" type="password" name="password" required class="form-control" placeholder="Mật khẩu">
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-main text-center" style="background-color: #e21d2a;font-size:14px">Đăng nhập</button>
+                            </div>
+                            <p>@ViewBag.error</p>
+                        </form>
+                    <p class="mt-20">Bạn chưa có tài khoản ?<a href="/account/register"> Đăng ký</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

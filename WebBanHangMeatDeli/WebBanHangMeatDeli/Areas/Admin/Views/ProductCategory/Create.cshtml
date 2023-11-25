@@ -1,0 +1,73 @@
+﻿@model WebBanHangMeatDeli.Models.tb_ProductCatagory
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content">
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title text-lg font-weight-bold">THÊM MỚI DANH MỤC SẢN PHẨM</h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    @using (Html.BeginForm("Create", "ProductCategory", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="tab-content">
+                                    <div class="active tab-pane" id="activity">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Tên danh mục sản phẩm</label>
+                                            @Html.EditorFor(x => x.Name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Tên danh mục sản phẩm" } })
+                                            @Html.ValidationMessageFor(x => x.Name, null, new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Danh mục</label>
+                                            @Html.DropDownListFor(x => x.Menu_Id, ViewBag.ProductCategory as SelectList, "-Chọn danh mục-", new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.Menu_Id, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Mô tả</label>
+                                            @Html.TextAreaFor(x => x.Description, new { @class = "form-control", @placeholder = "Mô tả" })
+                                            @Html.ValidationMessageFor(x => x.Description, null, new { @class = "text-danger" })
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Người tạo</label>
+                                                    @Html.TextBoxFor(x => x.CreatedBy, new { @class = "form-control", @placeholder = "Người tạo" })
+                                                    @Html.ValidationMessageFor(x => x.CreatedBy, null, new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Người chỉnh sửa</label>
+                                                    @Html.TextBoxFor(x => x.ModifiedBy, new { @class = "form-control", @placeholder = "Người chỉnh sửa" })
+                                                    @Html.ValidationMessageFor(x => x.ModifiedBy, null, new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group ml-3">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Tạo" class="btn btn-primary" />
+                                    <a class="ml-2 btn btn-danger" href="/Admin/ProductCategory/Index">Trở lại</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>

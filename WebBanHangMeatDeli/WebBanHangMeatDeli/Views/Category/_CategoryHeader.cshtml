@@ -1,0 +1,30 @@
+﻿@model IEnumerable<WebBanHangMeatDeli.Models.tb_Menu>
+@if (Model != null && Model.Any())
+{
+    <ul class="u-custom-font u-font-roboto-condensed u-nav u-unstyled u-nav-1">
+        @foreach (var item in Model.Distinct())
+        {
+            if (item.Alias.Equals("trang-chu"))
+            {
+                item.Alias = "";
+            }
+            <li class="u-nav-item">
+                <a class="u-button-style u-hover-custom-color-2 u-nav-link" href="/@item.Alias" style="padding: 22px 28px;">@item.Title</a>
+                @if (item.tb_ProductCatagory != null && item.tb_ProductCatagory.Any())
+                {
+                    <div class="u-nav-popup">
+                        <ul class="u-custom-font u-font-roboto-condensed u-h-spacing-35 u-nav u-unstyled u-v-spacing-10 u-nav-2">
+                            @foreach (var ProductCategory in item.tb_ProductCatagory)
+                            {
+                                <li class="u-nav-item">
+                                    <a href="/san-pham/@ProductCategory.Name" class="u-button-style u-hover-white u-nav-link u-text-hover-custom-color-1 u-white">@ProductCategory.Name</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
+            </li>
+        }
+    </ul>
+}
+

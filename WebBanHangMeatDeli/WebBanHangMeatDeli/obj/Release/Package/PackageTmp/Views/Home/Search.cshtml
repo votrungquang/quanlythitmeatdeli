@@ -1,0 +1,68 @@
+﻿@model IPagedList<WebBanHangMeatDeli.Models.tb_Product>
+@using PagedList.Mvc;
+@using PagedList;
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="u-align-center u-clearfix u-white u-section-3" id="sec-0c7a" style="margin-bottom:30px">
+    <div class="u-clearfix u-sheet u-valign-middle-xs u-sheet-1">
+        <a class="u-custom-font u-text-custom-color-1 u-font-roboto-condensed" href="/" style="text-decoration:none;float:left;font-size:13px;margin:15px 0;">Trang chủ<span>&emsp;/&emsp;</span></a>
+        <p class="u-custom-font  u-font-roboto-condensed" style="text-decoration:none;float:left;font-size:13px;margin:15px 0;">Tìm kiếm</p>
+        <div class="u-expanded-width u-layout-grid u-products u-products-1">
+            @if (Model != null && Model.Any())
+            {
+                <p class="u-custom-font  u-font-roboto-condensed u-text-variant" style="margin-bottom:2rem; font-size:1.5rem">Có @ViewBag.count sản phẩm được tìm thấy</p>
+                <div class="u-repeater u-repeater-1">
+                    @foreach (var item in Model)
+                    {
+                        <!--product_item-->
+                        if (item.IsActive)
+                        {
+                            <div class="u-align-left u-container-style u-products-item u-repeater-item u-white u-repeater-item-1 @item.Alias">
+
+                                <div class="u-container-layout u-similar-container u-container-layout-1">
+                                    @if (item.PriceSale > 0)
+                                    {
+                                        <span class="u-custom-font u-font-roboto-condensed" style="float: right; color: #e21d2a; font-weight: 700 ">Sale</span>
+                                    }
+                                    <!--product_image-->
+                                    <a href="/san-pham/@item.Alias-p-@item.Id">
+                                        <img alt="" class="u-hover-feature u-image u-image-default u-product-control u-image-1" src="~/Upload/Product/@item.Image" data-image-width="600" data-image-height="600">
+                                    </a>
+                                    <h4 class="u-custom-font u-font-roboto-condensed u-hover-feature u-product-control u-text u-text-black u-text-default u-text-2">
+                                        <a class="u-product-title-link" href="/san-pham/@item.Alias-p-@item.Id">@item.Name</a>
+                                    </h4><!--/product_title--><!--product_price-->
+                                    <div class="u-product-control u-product-price u-product-price-1">
+                                        <div class="u-price-wrapper u-spacing-10">
+                                            <!--product_old_price-->
+                                            @if (item.IsSale)
+                                            {
+                                                <div class="u-price u-text-custom-color-1" style="font-size: 0.8125rem; font-weight: 700;">@WebBanHangMeatDeli.Commons.Common.FormatNumber(item.PriceSale, 0)<sup>đ</sup></div>
+                                                <div class="u-price " style="font-size: 0.75rem; text-decoration-line:line-through; font-weight: 700;">@WebBanHangMeatDeli.Commons.Common.FormatNumber(item.Price, 0)<sup>đ</sup></div>
+
+                                            }
+                                            else
+                                            {
+                                                <div class="u-price u-text-custom-color-1" style="font-size: 0.8125rem; font-weight: 700;">@WebBanHangMeatDeli.Commons.Common.FormatNumber(item.Price, 0)<sup>đ</sup></div>
+                                            }
+                                        </div>
+                                    </div><!--/product_price--><!--product_button--><!--options_json--><!--{"clickType":"add-to-cart","content":"Chọn mua"}--><!--/options_json-->
+                                    <a href="#" data-id="@item.Id" class="btnAddCart u-align-center u-border-2 u-border-custom-color-1 u-btn u-btn-round u-button-style u-custom-font u-font-roboto-condensed u-hover-custom-color-1 u-hover-feature u-product-control u-radius-20 u-text-custom-color-1 u-text-hover-white u-white u-btn-2">Chọn mua</a>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+                @Html.PagedListPager(Model, page => Url.Action("Search", new { page }))
+            }
+            else
+            {
+                <p class="u-custom-font  u-font-roboto-condensed u-text-variant" style="margin-bottom:2rem; font-size:1.5rem">@ViewBag.error</p>
+            }
+        </div>
+    </div><!--/products-->
+</section>
+
+
+

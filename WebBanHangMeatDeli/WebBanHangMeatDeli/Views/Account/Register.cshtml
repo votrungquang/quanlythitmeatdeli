@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "Register";
+}
+<section class="signin-page account">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="block text-center">
+                    <h2 class="text-center">Tạo tài khoản</h2>
+                    <form class="text-left clearfix" style="font-family:Roboto Condensed" method="post">
+                        <div class="form-group">
+                            <input name="name" required class="form-control" placeholder="Họ và tên">
+                        </div>
+                        <div class="form-group">
+                            <input name="email" required class="form-control" placeholder="Email">
+                        </div>
+                        <div class="form-group">
+                            <input name="password" type="password" required class="form-control" placeholder="Mật khẩu">
+                        </div>
+                        <div class="form-group">
+                            <input name="address" required class="form-control" placeholder="Địa chỉ">
+                        </div>
+                        <div class="form-group">
+                            <input name="phone" maxlength="10" required class="form-control" placeholder="Số điện thoại">
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-main text-center" style="background-color: #e21d2a;font-size:14px">Đăng ký</button>
+                        </div>
+                        <p>@ViewBag.error</p>
+                    </form>
+                    <p class="mt-5">Bạn đã có tài khoản ?<a href="/account/login"> Đăng nhập</a></p>
+                    <p><a href="#">Quên mật khẩu?</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

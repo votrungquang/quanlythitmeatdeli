@@ -1,0 +1,288 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MeatDeliSaiGonModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="tb_Contact">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Menu_Id" Type="Int32" />
+    <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="isRead" Type="Boolean" />
+    <Property Name="CreatedDate" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="CreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ModifiedDate" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="ModifiedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tb_Menu" Relationship="Self.FK__Menu__Contact" FromRole="tb_Contact" ToRole="tb_Menu" />
+  </EntityType>
+  <EntityType Name="tb_Menu">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Alias" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Position" Type="Int32" />
+    <Property Name="CreatedDate" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="CreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ModifiedDate" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="ModifiedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tb_Contact" Relationship="Self.FK__Menu__Contact" FromRole="tb_Menu" ToRole="tb_Contact" />
+    <NavigationProperty Name="tb_News" Relationship="Self.FK__Menu__News" FromRole="tb_Menu" ToRole="tb_News" />
+    <NavigationProperty Name="tb_ProductCatagory" Relationship="Self.FK__Menu__ProductsCategory" FromRole="tb_Menu" ToRole="tb_ProductCatagory" />
+  </EntityType>
+  <EntityType Name="tb_News">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Alias" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Menu_Id" Type="Int32" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="CreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ModifiedDate" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="ModifiedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tb_Menu" Relationship="Self.FK__Menu__News" FromRole="tb_News" ToRole="tb_Menu" />
+  </EntityType>
+  <EntityType Name="tb_OrderDetails">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Orders_Id" Type="Int32" />
+    <Property Name="Product_Id" Type="Int32" />
+    <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Quantity" Type="Int32" />
+    <NavigationProperty Name="tb_Orders" Relationship="Self.FK__Orders__OdersDetails" FromRole="tb_OrderDetails" ToRole="tb_Orders" />
+    <NavigationProperty Name="tb_Product" Relationship="Self.FK__Products__OdersDetails" FromRole="tb_OrderDetails" ToRole="tb_Product" />
+  </EntityType>
+  <EntityType Name="tb_Orders">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="User_Id" Type="Int32" />
+    <Property Name="Phone" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="TotalAmount" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Quantity" Type="Int32" />
+    <Property Name="CreatedDate" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="CreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ModifiedDate" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="ModifiedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tb_OrderDetails" Relationship="Self.FK__Orders__OdersDetails" FromRole="tb_Orders" ToRole="tb_OrderDetails" />
+    <NavigationProperty Name="tb_Users" Relationship="Self.FK__User__Oders" FromRole="tb_Orders" ToRole="tb_Users" />
+    <Property Name="NameOrder" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="tb_Product">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Alias" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Price" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="PriceSale" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="CreatedDate" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="CreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ModifiedDate" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="ModifiedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ProductCate_Id" Type="Int32" />
+    <NavigationProperty Name="tb_OrderDetails" Relationship="Self.FK__Products__OdersDetails" FromRole="tb_Product" ToRole="tb_OrderDetails" />
+    <NavigationProperty Name="tb_ProductCatagory" Relationship="Self.FK__ProductsCategory__Product" FromRole="tb_Product" ToRole="tb_ProductCatagory" />
+    <Property Name="IsSale" Type="Boolean" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="Image1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Image2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="tb_ProductCatagory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="CreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ModifiedDate" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="ModifiedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Menu_Id" Type="Int32" />
+    <NavigationProperty Name="tb_Menu" Relationship="Self.FK__Menu__ProductsCategory" FromRole="tb_ProductCatagory" ToRole="tb_Menu" />
+    <NavigationProperty Name="tb_Product" Relationship="Self.FK__ProductsCategory__Product" FromRole="tb_ProductCatagory" ToRole="tb_Product" />
+  </EntityType>
+  <EntityType Name="tb_Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsConfirm" Type="Boolean" />
+    <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UserType_ID" Type="Int32" />
+    <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Avatar" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tb_Orders" Relationship="Self.FK__User__Oders" FromRole="tb_Users" ToRole="tb_Orders" />
+    <NavigationProperty Name="tb_UsersType" Relationship="Self.FK__UserType__User" FromRole="tb_Users" ToRole="tb_UsersType" />
+  </EntityType>
+  <EntityType Name="tb_UsersType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tb_Users" Relationship="Self.FK__UserType__User" FromRole="tb_UsersType" ToRole="tb_Users" />
+  </EntityType>
+  <Association Name="FK__Menu__Contact">
+    <End Role="tb_Menu" Type="Self.tb_Menu" Multiplicity="0..1" />
+    <End Role="tb_Contact" Type="Self.tb_Contact" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_Menu">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tb_Contact">
+        <PropertyRef Name="Menu_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Menu__News">
+    <End Role="tb_Menu" Type="Self.tb_Menu" Multiplicity="0..1" />
+    <End Role="tb_News" Type="Self.tb_News" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_Menu">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tb_News">
+        <PropertyRef Name="Menu_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Menu__ProductsCategory">
+    <End Role="tb_Menu" Type="Self.tb_Menu" Multiplicity="0..1" />
+    <End Role="tb_ProductCatagory" Type="Self.tb_ProductCatagory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_Menu">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tb_ProductCatagory">
+        <PropertyRef Name="Menu_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Orders__OdersDetails">
+    <End Role="tb_Orders" Type="Self.tb_Orders" Multiplicity="0..1" />
+    <End Role="tb_OrderDetails" Type="Self.tb_OrderDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_Orders">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tb_OrderDetails">
+        <PropertyRef Name="Orders_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Products__OdersDetails">
+    <End Role="tb_Product" Type="Self.tb_Product" Multiplicity="0..1" />
+    <End Role="tb_OrderDetails" Type="Self.tb_OrderDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tb_OrderDetails">
+        <PropertyRef Name="Product_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__User__Oders">
+    <End Role="tb_Users" Type="Self.tb_Users" Multiplicity="0..1" />
+    <End Role="tb_Orders" Type="Self.tb_Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tb_Orders">
+        <PropertyRef Name="User_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ProductsCategory__Product">
+    <End Role="tb_ProductCatagory" Type="Self.tb_ProductCatagory" Multiplicity="0..1" />
+    <End Role="tb_Product" Type="Self.tb_Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_ProductCatagory">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tb_Product">
+        <PropertyRef Name="ProductCate_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__UserType__User">
+    <End Role="tb_UsersType" Type="Self.tb_UsersType" Multiplicity="0..1" />
+    <End Role="tb_Users" Type="Self.tb_Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_UsersType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tb_Users">
+        <PropertyRef Name="UserType_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MeatDeliSaiGonEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tb_Contact" EntityType="Self.tb_Contact" />
+    <EntitySet Name="tb_Menu" EntityType="Self.tb_Menu" />
+    <EntitySet Name="tb_News" EntityType="Self.tb_News" />
+    <EntitySet Name="tb_OrderDetails" EntityType="Self.tb_OrderDetails" />
+    <EntitySet Name="tb_Orders" EntityType="Self.tb_Orders" />
+    <EntitySet Name="tb_Product" EntityType="Self.tb_Product" />
+    <EntitySet Name="tb_ProductCatagory" EntityType="Self.tb_ProductCatagory" />
+    <EntitySet Name="tb_Users" EntityType="Self.tb_Users" />
+    <EntitySet Name="tb_UsersType" EntityType="Self.tb_UsersType" />
+    <AssociationSet Name="FK__Menu__Contact" Association="Self.FK__Menu__Contact">
+      <End Role="tb_Menu" EntitySet="tb_Menu" />
+      <End Role="tb_Contact" EntitySet="tb_Contact" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Menu__News" Association="Self.FK__Menu__News">
+      <End Role="tb_Menu" EntitySet="tb_Menu" />
+      <End Role="tb_News" EntitySet="tb_News" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Menu__ProductsCategory" Association="Self.FK__Menu__ProductsCategory">
+      <End Role="tb_Menu" EntitySet="tb_Menu" />
+      <End Role="tb_ProductCatagory" EntitySet="tb_ProductCatagory" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Orders__OdersDetails" Association="Self.FK__Orders__OdersDetails">
+      <End Role="tb_Orders" EntitySet="tb_Orders" />
+      <End Role="tb_OrderDetails" EntitySet="tb_OrderDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Products__OdersDetails" Association="Self.FK__Products__OdersDetails">
+      <End Role="tb_Product" EntitySet="tb_Product" />
+      <End Role="tb_OrderDetails" EntitySet="tb_OrderDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__User__Oders" Association="Self.FK__User__Oders">
+      <End Role="tb_Users" EntitySet="tb_Users" />
+      <End Role="tb_Orders" EntitySet="tb_Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ProductsCategory__Product" Association="Self.FK__ProductsCategory__Product">
+      <End Role="tb_ProductCatagory" EntitySet="tb_ProductCatagory" />
+      <End Role="tb_Product" EntitySet="tb_Product" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UserType__User" Association="Self.FK__UserType__User">
+      <End Role="tb_UsersType" EntitySet="tb_UsersType" />
+      <End Role="tb_Users" EntitySet="tb_Users" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

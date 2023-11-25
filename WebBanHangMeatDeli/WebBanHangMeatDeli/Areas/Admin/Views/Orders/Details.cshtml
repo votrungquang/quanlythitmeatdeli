@@ -1,0 +1,123 @@
+﻿@model WebBanHangMeatDeli.Models.tb_Orders
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>tb_Orders</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Code)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Code)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Phone)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Phone)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Address)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Address)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.TotalAmount)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.TotalAmount)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Quantity)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.CreatedDate)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.CreatedBy)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.CreatedBy)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.ModifiedDate)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.ModifiedDate)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.ModifiedBy)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.ModifiedBy)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.NameOrder)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.NameOrder)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.tb_Users.Name)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.tb_Users.Name)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

@@ -1,0 +1,121 @@
+﻿@model IEnumerable<WebBanHangMeatDeli.Models.tb_Menu>
+
+@{
+    ViewBag.Title = "Trang chủ";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@Html.Partial("_PartialModalDelete")
+<!--Modal Create-->
+@if (TempData["message"] != null)
+{
+    @section scripts {
+        <script type="text/javascript">
+                $(document).ready(function () {
+                    toastr.success("@TempData["message"]","Thông báo")
+                })
+        </script>
+    }
+}
+@section script{
+    <script>
+        $(document).ready(function () {
+            $('body').on('click', '.btnDeleteMenu', function () {
+                var id = $(this).data("id");
+                $('body').on('click', '.btnConfirm', function () {
+                    $.ajax({
+                        url: `/Admin/Menu/Delete`,
+                        type: 'POST',
+                        data: { id: id },
+                        success: function (rs) {
+                            if (rs.success) {
+                                $('#row_' + id).remove();
+                                toastr.success("Xóa thành công!", "Thông báo");
+                            };
+
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>THÔNG TIN DANH MỤC</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">Trang chủ</li>
+                    <li class="breadcrumb-item active">Danh mục</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <!-- Modal Delete-->
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <div class="card-tools  mr-2">
+                <a class="btn btn-success" href="/Admin/Menu/Create"><i class=" fas fa-plus-square fa-sm"></i></a>
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table  text-center">
+                <tr>
+                    <th>
+                        STT
+                    </th>
+                    <th>
+                        Tên menu
+                    </th>
+                    <th>
+                        Ngày tạo
+                    </th>
+                    <th>
+                        Ngày cập nhật
+                    </th>
+                    <th></th>
+                </tr>
+                @if (Model != null && Model.Any())
+                {
+
+                    foreach (var item in Model)
+                    {
+                        <tr id="row_@item.Id">
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Position)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CreatedDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ModifiedDate)
+                            </td>
+                            <td>
+                                <div class="d-flex justify-content-center">
+                                    <a class="ml-1 btn btn-sm btn-primary" href="/Admin/Menu/Edit/@item.Id "><i class="fas fa-edit fa-xs"></i></a>
+                                    <button class="ml-1 btn-sm btn btn-danger btnDeleteMenu" data-id="@item.Id" data-toggle="modal" data-target="#DeleteModal"><i class="fas fa-trash-alt fa-xs"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <caption>Không có bản ghi nào!</caption>
+                }
+            </table>
+        </div>
+    </div>
+
+</section>
+
